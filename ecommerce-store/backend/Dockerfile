@@ -1,13 +1,13 @@
-FROM node:16-alpine
+FROM node:14-alpine
 
 WORKDIR /backend
 
-COPY package*.json ./
-
-COPY . .
+COPY ["package.json", "package-lock.json", "./"]
 
 RUN npm install
 
-EXPOSE 5000
+COPY . .
 
-CMD [ "node", "app.js" ]
+EXPOSE 3000
+
+CMD [ "npm", "start" ]

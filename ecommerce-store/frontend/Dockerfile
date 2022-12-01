@@ -1,13 +1,17 @@
-FROM node:16-alpine
+FROM node:14-alpine
+
+RUN apk add --no-cache --virtual .gyp python3 make g++
 
 WORKDIR /frontend
 
-COPY package*.json ./
-
-COPY . .
+COPY ["package.json", "package-lock.json", "./"]
 
 RUN npm install
 
-EXPOSE 5000
+COPY . .
 
-CMD [ "node", "App.js" ]
+RUN npm build
+
+EXPOSE 3000
+
+CMD [ "npm", "start" ]
